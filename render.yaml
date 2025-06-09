@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: kafka-server
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: KAFKA_CFG_PROCESS_ROLES
+        value: broker,controller
+      - key: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+        value: 0@localhost:9093
+      - key: KAFKA_CFG_NODE_ID
+        value: 0
+      - key: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
+        value: CONTROLLER
+      - key: KAFKA_CFG_LISTENERS
+        value: PLAINTEXT://:9092,CONTROLLER://:9093
+      - key: KAFKA_CFG_ADVERTISED_LISTENERS
+        value: PLAINTEXT://<EXTERNAL_RENDER_URL>:9092
+      - key: KAFKA_KRAFT_CLUSTER_ID
+        value: kraft-cluster-1
